@@ -20,7 +20,7 @@ function useLocalStorage(itemName, initalState){
     
           setItem(parsedItem);
           setLoading(false);
-        },1000)
+        },4000)
       }
       catch(error){
         setError(error);    
