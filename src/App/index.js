@@ -47,7 +47,27 @@ return (
         searchValue={searchValue}
         setSearchValue={setSearchValue}
     />
-    <TodoList>
+    <TodoList
+        error={error}
+        oloading={loading}
+        searchedTodos={searchedTodos}
+        totalTodos={totalTodos}
+        searchText={searchValue}
+        onError={()=> <TodosError/> }
+        onLoading={()=> <TodosLoading/> }
+        onEmptyTodos={()=> <EmptyTodos/> }
+        onEmptySearchResults={(searchText)=> <p>No hay resultados para {searchText} </p>}
+        render={todo=> (
+            <TodoItem
+                key={todo.text}
+                text={todo.text}
+                completed={todo.completed}
+                onComplete={()=>completeTodo(todo.text)}
+                onDelete={()=>deleteTodo(todo.text)}/>
+                )
+        }
+    />
+    {/* <TodoList>
         {error && <TodosError error={error} />}
         {loading && <TodosLoading/>}
         {(!loading && !searchedTodos.length) && <EmptyTodos/> }
@@ -62,7 +82,7 @@ return (
             )
         )
         }
-    </TodoList>
+    </TodoList> */}
 
     {!!openModal && (
         <Modal>
