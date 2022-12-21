@@ -10,6 +10,7 @@ import { Modal } from '../Modal';
 import { TodosError } from '../TodosError';
 import { TodosLoading } from '../TodosLoading';
 import { EmptyTodos } from '../EmptyTodos';
+import { TodoHeader } from '../TodoHeader';
 
 // const defaultTodos = [
 //   { text: 'Cortar cebolla', completed: true },
@@ -39,17 +40,21 @@ function App() {
 
 return (
     <React.Fragment>
-    <TodoCounter
-        totalTodos={totalTodos}
-        completedTodos={completedTodos}
-    />
-    <TodoSearch
-        searchValue={searchValue}
-        setSearchValue={setSearchValue}
-    />
+    <TodoHeader
+        loading={loading}
+    >
+        <TodoCounter
+            totalTodos={totalTodos}
+            completedTodos={completedTodos}
+        />
+        <TodoSearch
+            searchValue={searchValue}     
+            setSearchValue={setSearchValue}
+        />
+    </TodoHeader>
     <TodoList
         error={error}
-        oloading={loading}
+        loading={loading}
         searchedTodos={searchedTodos}
         totalTodos={totalTodos}
         searchText={searchValue}
