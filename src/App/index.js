@@ -1,27 +1,17 @@
 import React from 'react';
-import {useTodos} from './useTodos'
-import {TodoCounter} from '../TodoCounter';
-import {TodoSearch} from '../TodoSearch'
+import { useTodos } from './useTodos';
+import { TodoHeader } from '../TodoHeader';
+import { TodoCounter } from '../TodoCounter';
+import { TodoSearch } from '../TodoSearch';
 import { TodoList } from '../TodoList';
 import { TodoItem } from '../TodoItem';
-import { TodoForm } from '../TodoForm';
-import { CreateTodoButton } from '../CreateTodoButton';
-import { Modal } from '../Modal';
 import { TodosError } from '../TodosError';
 import { TodosLoading } from '../TodosLoading';
 import { EmptyTodos } from '../EmptyTodos';
-import { TodoHeader } from '../TodoHeader';
-import { ChangeAlertWithStorageListener } from '../ChangeAlert';
-
-// const defaultTodos = [
-//   { text: 'Cortar cebolla', completed: true },
-//   { text: 'Tomar el cursso de intro a React', completed: false },
-//   { text: 'Llorar con la llorona', completed: true },
-//   { text: 'LALALALAA', completed: false },
-// ];
-
-
-
+import { TodoForm } from '../TodoForm';
+import { CreateTodoButton } from '../CreateTodoButton';
+import { Modal } from '../Modal';
+import { ChangeAlert } from '../ChangeAlert';
 
 function App() {
   const {
@@ -37,70 +27,64 @@ function App() {
     searchValue,
     setSearchValue,
     addTodo,
-    sincronizeTodos
-} = useTodos();
-
-return (
+    sincronizeTodos,
+  } = useTodos();
+  
+  return (
     <React.Fragment>
-    <TodoHeader
-        loading={loading}
-    >
+      <TodoHeader loading={loading}>
         <TodoCounter
-            totalTodos={totalTodos}
-            completedTodos={completedTodos}
+          totalTodos={totalTodos}
+          completedTodos={completedTodos}
         />
         <TodoSearch
-            searchValue={searchValue}     
-            setSearchValue={setSearchValue}
+          searchValue={searchValue}
+          setSearchValue={setSearchValue}
         />
-    </TodoHeader>
-    <TodoList
+      </TodoHeader>
+
+      <TodoList
         error={error}
         loading={loading}
-        searchedTodos={searchedTodos}
         totalTodos={totalTodos}
+        searchedTodos={searchedTodos}
         searchText={searchValue}
-        onError={()=> <TodosError/> }
-        onLoading={()=> <TodosLoading/> }
-        onEmptyTodos={()=> <EmptyTodos/> }
-        onEmptySearchResults={(searchText)=> <p>No hay resultados para {searchText} </p>}
-        render={todo=> (
-            <TodoItem
-                key={todo.text}
-                text={todo.text}
-                completed={todo.completed}
-                onComplete={()=>completeTodo(todo.text)}
-                onDelete={()=>deleteTodo(todo.text)}/>
-                )
+        onError={() => <TodosError />}
+        onLoading={() => <TodosLoading />}
+        onEmptyTodos={() => <EmptyTodos />}
+        onEmptySearchResults={
+          (searchText) => <p>No hay resultados para {searchText}</p>
         }
-    >
-        {/* {todo=> (
-            <TodoItem
-                key={todo.text}
-                text={todo.text}
-                completed={todo.completed}
-                onComplete={()=>completeTodo(todo.text)}
-                onDelete={()=>deleteTodo(todo.text)}/>
-            )
-        } */}
-    </TodoList>
+      >
+        {todo => (
+          <TodoItem
+            key={todo.text}
+            text={todo.text}
+            completed={todo.completed}
+            onComplete={() => completeTodo(todo.text)}
+            onDelete={() => deleteTodo(todo.text)}
+          />
+        )}
+      </TodoList>
 
-    {!!openModal && (
+      {!!openModal && (
         <Modal>
-            <TodoForm
-              addTodo={addTodo}
-              setOpenModal={setOpenModal}
-            />
+          <TodoForm
+            addTodo={addTodo}
+            setOpenModal={setOpenModal}
+          />
         </Modal>
-    )}        
-    <CreateTodoButton
+      )}
+
+      <CreateTodoButton
         setOpenModal={setOpenModal}
-    />
-    <ChangeAlertWithStorageListener
-        sincronize = {sincronizeTodos}
-    />
+      />
+
+      <ChangeAlert
+        sincronize={sincronizeTodos}
+      />
     </React.Fragment>
-)
+  );
 }
 
 export default App;
